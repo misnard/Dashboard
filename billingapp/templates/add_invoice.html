@@ -1,0 +1,111 @@
+{% extends 'content_layout.html' %}
+{% block content %}
+    <div class="content">
+        <nav class="breadcrumb bg-white push">
+            <a class="breadcrumb-item" href="/invoices">Invoices</a>
+            <span class="breadcrumb-item active">Invoice - New</span>
+        </nav>
+        <div class="block">
+            <div class="block-header block-header-default">
+                <h3 class="block-title">New Invoice</h3>
+                <div class="block-options">
+                    <button type="button" class="btn-block-option" data-toggle="block-option" data-action="state_toggle"
+                            data-action-mode="demo">
+                        <i class="si si-refresh"></i>
+                    </button>
+                    <button type="button" class="btn-block-option" data-toggle="block-option"
+                            data-action="content_toggle"><i class="si si-arrow-up"></i></button>
+                </div>
+            </div>
+            <div class="block-content">
+                <form action="/invoice/add/" method="post">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+                    <div class="form-group row">
+                        <div class="col-6">
+                            <label for="invoice_name">Name</label>
+                            <input type="text" class="form-control form-control-lg" id="mega-firstname"
+                                   name="invoice_name" placeholder="XX Feb 2020"
+                                   data-kwimpalastatus="alive" data-kwimpalaid="1586208939599-64">
+                        </div>
+
+                        <div class="col-6">
+                            <label for="invoice_name">Customer</label>
+                            <select class="form-control form-control-lg" name="customer">
+                                <option value="0">Please select</option>
+                                {% for customer in customers %}
+                                    <option value="{{ customer.id }}">{{ customer.name }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+
+                    </div>
+
+
+                    <div class="form-group row">
+                        <div class="col-12">
+                            <button type="button" class="btn btn-info mr-5 mb-5" onclick="addItem()">
+                                <i class="fa fa-plus mr-5"></i>Add Item
+                            </button>
+                        </div>
+                    </div>
+                    <!-- Add item form -->
+
+                    <div id="new_items"></div>
+
+                    <div class="form-group row">
+                        <div class="col-12">
+                            <button type="submit" class="btn btn-alt-primary">
+                                <i class="fa fa-check mr-5"></i> Submit invoice
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group row" id="item" style="display: none;">
+        <div class="col-8">
+            <select class="form-control form-control-lg" name="products_code[]">
+                <option value="error">Please select</option>
+                {% for product in products %}
+                    <option value="{{ product.product_code }}">{{ product.name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="col-3">
+            <input type="text" class="form-control form-control-lg"
+                   name="qty[]" placeholder="Qty">
+        </div>
+
+    </div>
+
+    <script>
+        let count = 1;
+
+        function addItem() {
+            let item = document.createElement('div');
+            item.className = "form-group row"
+            let deleteLink = document.createElement('div');
+            deleteLink.className = "col-1"
+            deleteLink.id = "delete_link"
+            item.id = count;
+            // link to delete extended form elements
+            deleteLink.innerHTML = '<button type="button" class="btn btn-danger mr-5 mb-5"' +
+                ' onclick="deleteItem(' + count + ')"><i class="fa fa-times"></i></button>';
+
+            item.innerHTML = document.getElementById("item").innerHTML
+            document.getElementById('new_items').appendChild(item);
+            item.appendChild(deleteLink)
+            count++;
+        }
+
+        // function to delete the newly added set of elements
+        function deleteItem(eleId) {
+            let element = document.getElementById(eleId);
+            let parentElement = document.getElementById('new_items');
+            parentElement.removeChild(element);
+        }
+
+    </script>
+{% endblock %}

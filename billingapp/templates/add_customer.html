@@ -1,0 +1,66 @@
+{% extends 'content_layout.html' %}
+{% block content %}
+    <div class="content">
+        <nav class="breadcrumb bg-white push">
+            <a class="breadcrumb-item" href="/invoices">Invoices</a>
+            <span class="breadcrumb-item active">Customer - New</span>
+        </nav>
+        <div class="block">
+            <div class="block-header block-header-default">
+                <h3 class="block-title">New Customer</h3>
+                <div class="block-options">
+                    <button type="button" class="btn-block-option" data-toggle="block-option" data-action="state_toggle"
+                            data-action-mode="demo">
+                        <i class="si si-refresh"></i>
+                    </button>
+                    <button type="button" class="btn-block-option" data-toggle="block-option"
+                            data-action="content_toggle"><i class="si si-arrow-up"></i></button>
+                </div>
+            </div>
+            <div class="block-content">
+                <form action="/customer/add/" method="post">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+                    <div class="form-group row">
+                        <div class="col-6">
+                            <label for="name">Name</label>
+                            <input required type="text" class="form-control form-control-lg" id="name"
+                                   name="name" placeholder="Mr Sandman">
+                        </div>
+                        <div class="col-6">
+                            <label for="siret">Siret</label>
+                            <input type="text" class="form-control form-control-lg" id="siret"
+                                   name="siret" placeholder="1 93 20 20 XXXXXXX">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-6">
+                            <label for="email">Email</label>
+                            <input required type="text" class="form-control form-control-lg" id="email"
+                                   name="email" placeholder="hello@world.com">
+                        </div>
+                        <div class="col-6">
+                            <label for="phone">Phone</label>
+                            <input type="text" class="form-control form-control-lg" id="phone"
+                                   name="phone" placeholder="06 XX XX XX XX">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-12">
+                            <label for="address">Address</label>
+                            <textarea required class="form-control form-control-lg"
+                                      rows="5"
+                                      name="address" placeholder="10 road paradise"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-12">
+                            <button type="submit" class="btn btn-alt-primary">
+                                <i class="fa fa-check mr-5"></i> Submit
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

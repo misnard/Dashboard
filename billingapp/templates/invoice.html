@@ -1,0 +1,122 @@
+{% extends 'content_layout.html' %}
+{% block title %}{{ invoice.description }}{% endblock %}
+{% block content %}
+    <div class="content">
+        <nav class="breadcrumb bg-white push">
+            <a class="breadcrumb-item" href="/invoices">Invoices</a>
+            <span class="breadcrumb-item active">Invoice - INV{{ invoice.id }}</span>
+        </nav>
+        <!-- Invoice -->
+        <div class="block">
+            <div class="block-header block-header-default">
+                <h3 class="block-title">#INV{{ invoice.id }} - {{ invoice.status.name | capitalize }}</h3>
+                <div class="block-options">
+                    <!-- Print Page functionality is initialized in Helpers.print() -->
+                    <button type="button" class="btn-block-option" onclick="Codebase.helpers('print-page');">
+                        <i class="si si-printer"></i> Print Invoice
+                    </button>
+                    <button type="button" class="btn-block-option" data-toggle="block-option"
+                            data-action="fullscreen_toggle"></button>
+                    <button type="button" class="btn-block-option" data-toggle="block-option" data-action="state_toggle"
+                            data-action-mode="demo">
+                        <i class="si si-refresh"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="block-content">
+                <!-- Invoice Info -->
+                <div class="row my-20">
+                    <!-- Company Info -->
+                    <div class="col-6">
+                        <p class="h3">{{ enterprise_infos.name }}</p>
+                        <address>
+                            {{ enterprise_infos.address }} <br>
+                            {{ enterprise_infos.postal_code }} {{ enterprise_infos.city }} <br>
+                            {% if enterprise_infos.email %}
+                                {{ enterprise_infos.email}} <br>
+                            {% endif %}
+
+                            {% if enterprise_infos.phone %}
+                                {{ enterprise_infos.phone }} <br>
+                            {% endif %}
+                        </address>
+                        <p style="white-space: pre-wrap">{{ enterprise_infos.bank_infos | safe }}</p>
+                    </div>
+                    <!-- END Company Info -->
+
+                    <!-- Client Info -->
+                    <div class="col-6 text-right">
+                        {% set customer = invoice.get_customer() %}
+                        <p class="h3">{{ customer.name }}</p>
+                        <address>
+                            {{ customer.address | safe }} <br>
+                            {% if customer.email %}
+                                {{ customer.email }} <br>
+                            {% endif %}
+
+                            {% if customer.phone %}
+                                {{ customer.phone }} <br>
+                            {% endif %}
+                        </address>
+                    </div>
+                    <!-- END Client Info -->
+                </div>
+                <!-- END Invoice Info -->
+
+                <!-- Table -->
+                <div class="table-responsive push">
+                    <table class="table table-bordered table-hover">
+                        <thead>
+                        <tr>
+                            <th class="text-center" style="width: 90px;">Qty</th>
+                            <th>Item</th>
+                            <th class="text-right" style="width: 120px;">Unit Cost</th>
+                            <th class="text-right" style="width: 120px;">Total</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for item in invoice.item %}
+                            {% set session = item.session_infos() %}
+                            <tr>
+                                <td class="text-center"><span
+                                        class="badge badge-pill badge-primary">{{ item.qty }}</span></td>
+                                <td>
+                                    <p class="font-w600 mb-5">{{ session.name }}</p>
+                                </td>
+                                <td class="text-right">{{ session.price_ht }} €</td>
+                                <td class="text-right">{{ item.item_total() }} €</td>
+                            </tr>
+                        {% endfor %}
+                        <tr>
+                            <td colspan="3" class="font-w600 text-right">Subtotal</td>
+                            <td class="text-right">{{ invoice.total() }} €</td>
+                        </tr>
+                        <tr>
+                            <td colspan="3"
+                                class="font-w600 text-right">
+
+                                {% if invoice.vat == 0 %}
+                                    <span class="font-weight-bold">{{ invoice_config("legal_infos_vat", user.enterprise[0].id) | safe }}</span>
+                                {% else %}
+                                    Vat Rate
+                                {% endif %}
+                            </td>
+                            <td class="text-right">{{ invoice.vat }}%</td>
+                        </tr>
+                        <tr class="table-warning">
+                            <td colspan="3" class="font-w700 text-uppercase text-right">Total Due</td>
+                            <td class="font-w700 text-right">{{ invoice.total() }} €</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <!-- END Table -->
+
+                <!-- Footer -->
+                <p class="text-muted text-center">{{ invoice_config("legal_infos_footer", user.enterprise[0].id) }}</p>
+                <!-- END Footer -->
+            </div>
+        </div>
+        <!-- END Invoice -->
+    </div>
+{% endblock %}

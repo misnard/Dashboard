@@ -1,0 +1,141 @@
+{% extends 'content_layout.html' %}
+{% block content %}
+    <!-- Main Container -->
+    <main id="main-container">
+        <!-- Page Content -->
+        <!-- User Info -->
+        <div class="bg-image bg-image-bottom"
+             style="background-image: url('{{ url_for('static', filename='assets/media/photos/photo13@2x.jpg', _external=True) }}');">
+            <div class="bg-primary-dark-op py-30">
+                <div class="content content-full text-center">
+                    <!-- Avatar -->
+                    <div class="mb-15">
+                        <a class="img-link" href="be_pages_generic_profile.html">
+                            <img class="img-avatar img-avatar96 img-avatar-thumb"
+                                 src="{{ url_for('static', filename='assets/media/avatars/avatar15.jpg', _external=True) }}"
+                                 alt="">
+                        </a>
+                    </div>
+                    <!-- END Avatar -->
+
+                    <!-- Personal -->
+                    <h1 class="h3 text-white font-w700 mb-10">
+                        {{ user.first_name }} {{ user.last_name }}
+                    </h1>
+                    <!-- END Personal -->
+                </div>
+            </div>
+        </div>
+        <!-- END User Info -->
+
+        <!-- Main Content -->
+        <div class="content">
+            <!-- User Profile -->
+            <div class="block">
+                <div class="block-header block-header-default">
+                    <h3 class="block-title">
+                        <i class="fa fa-user-circle mr-5 text-muted"></i> User Profile
+                    </h3>
+                </div>
+                <div class="block-content">
+                    <form action="/profile/update_infos" method="POST" enctype="multipart/form-data">
+                        <input required type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+                        <div class="row items-push">
+                            <div class="col-lg-3">
+                                <p class="text-muted">
+                                    Your account’s vital info.
+                                </p>
+                            </div>
+                            <div class="col-lg-7 offset-lg-1">
+                                <div class="form-group row">
+                                    <div class="col-12">
+                                        <label for="first_name">First Name</label>
+                                        <input required type="text" class="form-control form-control-lg"
+                                               id="first_name" name="first_name"
+                                               placeholder="Enter your first name.." value="{{ user.first_name }}">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <div class="col-12">
+                                        <label for="last_name">Last Name</label>
+                                        <input required type="text" class="form-control form-control-lg"
+                                               id="last_name" name="last_name"
+                                               placeholder="Enter your last name.." value="{{ user.last_name }}">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <div class="col-12">
+                                        <label for="email">Email Address</label>
+                                        <input required type="email" class="form-control form-control-lg"
+                                               id="email" name="email"
+                                               disabled
+                                               placeholder="Enter your email.." value="{{ user.email }}">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <div class="col-12">
+                                        <button type="submit" class="btn btn-alt-primary">Update</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <!-- END User Profile -->
+
+            <!-- Change Password -->
+            <div class="block">
+                <div class="block-header block-header-default">
+                    <h3 class="block-title">
+                        <i class="fa fa-asterisk mr-5 text-muted"></i> Change Password
+                    </h3>
+                </div>
+                <div class="block-content">
+                    <form action="/profile/update_password" method="post">
+                        <input required type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+                        <div class="row items-push">
+                            <div class="col-lg-3">
+                                <p class="text-muted">
+                                    Changing your sign in password is an easy way to keep your account secure.
+                                </p>
+                            </div>
+                            <div class="col-lg-7 offset-lg-1">
+                                <div class="form-group row">
+                                    <div class="col-12">
+                                        <label for="current_password">Current Password</label>
+                                        <input required type="password" class="form-control form-control-lg"
+                                               id="current_password" name="current_password">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <div class="col-12">
+                                        <label for="new_password">New Password</label>
+                                        <input required type="password" class="form-control form-control-lg"
+                                               id="new_password" name="new_password">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <div class="col-12">
+                                        <label for="new_password_confirmation">Confirm New Password</label>
+                                        <input required type="password" class="form-control form-control-lg"
+                                               id="new_password_confirmation"
+                                               name="new_password_confirmation">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <div class="col-12">
+                                        <button type="submit" class="btn btn-alt-primary">Update</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <!-- END Change Password -->
+        </div>
+        <!-- END Main Content -->
+        <!-- END Page Content -->
+    </main>
+{% endblock %}

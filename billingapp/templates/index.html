@@ -1,0 +1,132 @@
+{% extends 'content_layout.html' %}
+{% block content %}
+
+    <div class="content">
+        <div class="row gutters-tiny">
+
+            <div class="col-6 col-md-4">
+                <a class="block block-link-pop text-center" href="javascript:void(0)">
+                    <div class="block-content bg-body-light">
+                        <p class="font-w600">
+                            <i class="fa fa-sticky-note text-muted mr-5"></i>To do
+                        </p>
+                    </div>
+                    <div class="block-content">
+                        <p class="font-size-h1 text-danger">
+                            <strong>3</strong>
+                        </p>
+                    </div>
+                </a>
+            </div>
+
+
+            <div class="col-6 col-md-4">
+                <a class="block block-link-pop text-center" href="javascript:void(0)"
+                   onclick="window.location = '/invoices'">
+                    <div class="block-content bg-body-light">
+                        <p class="font-w600">
+                            <i class="fa fa-tags text-muted mr-5"></i>Pending invoices
+                        </p>
+                    </div>
+                    <div class="block-content">
+                        {% if invoice_count == 0 %}
+                            {% set importance = "success" %}
+                        {% elif invoice_count < 3 %}
+                            {% set importance = "warning" %}
+                        {% else %}
+                            {% set importance = "error" %}
+                        {% endif %}
+                        <p class="font-size-h1 text-{{ importance }}">
+                            <strong>{{ invoice_count }}</strong>
+                        </p>
+                    </div>
+                </a>
+            </div>
+
+            <div class="col-6 col-md-4">
+                <a class="block block-link-pop text-center" href="javascript:void(0)">
+                    <div class="block-content bg-body-light">
+                        <p class="font-w600">
+                            <i class="fa fa-calendar-check-o text-muted mr-5"></i>Events today
+                        </p>
+                    </div>
+                    <div class="block-content">
+                        <p class="font-size-h1">
+                            <strong>0</strong>
+                        </p>
+                    </div>
+                </a>
+            </div>
+
+            <div class="col-md-6">
+                <a class="block block-transparent border-left border-5x border-primary bg-image"
+                   style="background-image: url('{{ url_for('static', filename='assets/media/photos/photo20.jpg') }}');"
+                   href="javascript:void(0)">
+                    <div class="block-content block-content-full bg-black-op">
+                        <div class="pt-100">
+                            <h3 class="h4 text-white font-w700 mb-10">10 ways to build your own business</h3>
+                            <h4 class="text-white-op font-size-default mb-0">
+                            <span class="mr-10">
+                                <i class="fa fa-clock-o"></i> 15 min
+                            </span>
+                                <span>
+                                <i class="fa fa-comments-o"></i> 240
+                            </span>
+                            </h4>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-md-6">
+                <a class="block block-transparent border-left border-5x border-primary bg-image"
+                   style="background-image: url('{{ url_for('static', filename='assets/media/photos/photo20.jpg') }}');"
+                   href="javascript:void(0)">
+                    <div class="block-content block-content-full bg-black-op">
+                        <div class="pt-100">
+                            <h3 class="h4 text-white font-w700 mb-10">10 ways to build your own business</h3>
+                            <h4 class="text-white-op font-size-default mb-0">
+                            <span class="mr-10">
+                                <i class="fa fa-clock-o"></i> 15 min
+                            </span>
+                                <span>
+                                <i class="fa fa-comments-o"></i> 240
+                            </span>
+                            </h4>
+                        </div>
+                    </div>
+                </a>
+            </div>
+
+
+        </div>
+
+
+        <div class="block">
+            <div class="block-header block-header-default">
+                <h3 class="block-title">Blank
+                    <small>Get Started</small>
+                </h3>
+                <div class="block-options">
+                    <button type="button" class="btn-block-option" data-toggle="block-option"
+                            data-action="fullscreen_toggle"></button>
+                    <button type="button" class="btn-block-option" data-toggle="block-option"
+                            data-action="pinned_toggle">
+                        <i class="si si-pin"></i>
+                    </button>
+                    <button type="button" class="btn-block-option" data-toggle="block-option"
+                            data-action="state_toggle" data-action-mode="demo">
+                        <i class="si si-refresh"></i>
+                    </button>
+                    <button type="button" class="btn-block-option" data-toggle="block-option"
+                            data-action="content_toggle"></button>
+                    <button type="button" class="btn-block-option" data-toggle="block-option" data-action="close">
+                        <i class="si si-close"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="block-content">
+                <p>Create your own awesome project!</p>
+            </div>
+        </div>
+    </div>
+{% endblock %}
