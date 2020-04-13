@@ -1,0 +1,8 @@
+*.pyc
+__pycache__
+venv/
+app.db
+billingapp/tests/*.db
+geckodriver.log
+.cache/
+.idea
