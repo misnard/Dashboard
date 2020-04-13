@@ -29,7 +29,6 @@ def init_db():
                             "IBAN : GB06 OKOK 0000 0000 0000 00 <br>" +
                             "CODE BIC : TESTBIC123", "123123123123")
 
-
     enterprise.user = user
 
     customer = Customer("Openclassrooms", "7 cité Paradis <br>75010 Paris", "", "", "")
@@ -44,7 +43,7 @@ def init_db():
                                      "Conditions de paiement : paiement à réception de facture, à 30 jours. <br>" +
                                      "Indemnité forfaitaire pour frais de recouvrement due au " +
                                      "créancier en cas de retard de paiement: 40€ <br>" +
-                                     "Siret: 82337889800014")
+                                     "Siret: 12312312312312")
 
     main.db.session.add(enterprise)
     enterprise.invoice_config = [invoice_config_a, invoice_config_b, invoice_config_c]

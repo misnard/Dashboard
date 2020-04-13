@@ -9,8 +9,8 @@ class User(UserMixin, main.db.Model):
     email = main.db.Column(main.db.String(200), nullable=False, unique=True)
     first_name = main.db.Column(main.db.String(200))
     last_name = main.db.Column(main.db.String(200))
-    key = main.db.Column(main.db.String(200), nullable=False)
-    salt = main.db.Column(main.db.String(200))
+    key = main.db.Column(main.db.Binary, nullable=False)
+    salt = main.db.Column(main.db.Binary)
 
     def __init__(self, email, password, first_name, last_name):
         self.email = email
@@ -24,6 +24,10 @@ class User(UserMixin, main.db.Model):
 
     def hash_password(self, password):
         salt = self.salt
+
+        if type(salt) is not bytes:
+            salt = salt.encode('utf-8')
+
         key = hashlib.pbkdf2_hmac("sha256", password.encode("utf-8"), salt, 100000)
 
         return key

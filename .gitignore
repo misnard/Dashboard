@@ -6,3 +6,5 @@ billingapp/tests/*.db
 geckodriver.log
 .cache/
 .idea
+.env
+app.db
